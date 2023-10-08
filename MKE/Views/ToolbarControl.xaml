@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="MKE.ToolbarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="800">
+    <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="60">
+        <Button Width="40" Height="40" Margin="5" Click="OnNewModelClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewModel.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Model
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnSaveModelClick">
+            <Button.Content>
+                <Image Source="/Images/IconSaveModel.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                Save Model
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewNodeClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewNode.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Node
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewElementClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewElement.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Element
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewRollingSupportClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewRollingSupport.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Rolling Support
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewHingedSupportClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewHingedSupport.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Hinged Support
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewFixedSupportClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewFixedSupport.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Fixed Support
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewPointLoadClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewPointLoad.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Point Load
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnNewUniformLoadClick">
+            <Button.Content>
+                <Image Source="/Images/IconNewUniformLoad.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                New Uniform Load
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnCheckStructureClick">
+            <Button.Content>
+                <Image Source="/Images/IconCheckStructure.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                Check Structure
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnSolveClick">
+            <Button.Content>
+                <Image Source="/Images/IconSolve.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                Solve
+            </Button.ToolTip>
+        </Button>
+        <Button Width="40" Height="40" Margin="5" Click="OnSettingsClick">
+            <Button.Content>
+                <Image Source="/Images/IconSettings.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                Settings
+            </Button.ToolTip>
+        </Button>
+    </ToolBar>
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\DefaultSections.json" />
+    <None Remove="Resources\ButtonHingedSupport.png" />
+    <None Remove="Resources\ButtonRollingSupport.png" />
+    <None Remove="Resources\IconCheckStructure.png" />
+    <None Remove="Resources\IconNewElement.png" />
+    <None Remove="Resources\IconNewFixedSupport.png" />
+    <None Remove="Resources\IconNewHingedSupport.png" />
+    <None Remove="Resources\IconNewModel.png" />
+    <None Remove="Resources\IconNewNode.png" />
+    <None Remove="Resources\IconNewPointLoad.png" />
+    <None Remove="Resources\IconNewRollingSupport.png" />
+    <None Remove="Resources\IconNewUniformLoad.png" />
+    <None Remove="Resources\IconSaveModel.png" />
+    <None Remove="Resources\IconSettings.png" />
+    <None Remove="Resources\IconSolve.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Data\DefaultSections.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\ButtonHingedSupport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ButtonRollingSupport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewModel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewUniformLoad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconCheckStructure.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconSettings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconSolve.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconSaveModel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewNode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewElement.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewFixedSupport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewPointLoad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewHingedSupport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\IconNewRollingSupport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

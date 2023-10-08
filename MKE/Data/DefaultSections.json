@@ -1,0 +1,36 @@
+﻿[
+  {
+    "Name": "Square Section",
+    "Type": "Square",
+    "Height": 0.2,
+    "Width": 0.2,
+    "Area": 0.04,
+    "MomentOfInertia": 0.0001333
+  },
+  {
+    "Name": "Rectangular Section",
+    "Type": "Rectangle",
+    "Height": 0.3,
+    "Width": 0.2,
+    "Area": 0.06,
+    "MomentOfInertia": 0.0005
+  },
+  {
+    "Name": "Circular Section",
+    "Type": "Circle",
+    "Diameter": 0.2,
+    "Radius": 0.1,
+    "Area": 0.0314,
+    "MomentOfInertia": 0.0000265
+  },
+  {
+    "Name": "I-Beam Section",
+    "Type": "I-Beam",
+    "Height": 0.4,
+    "Width": 0.2,
+    "WebThickness": 0.02,
+    "FlangeThickness": 0.02,
+    "Area": 0.032,
+    "MomentOfInertia": 0.0005333
+  }
+]

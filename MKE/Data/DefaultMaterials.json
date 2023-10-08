@@ -1,0 +1,12 @@
+﻿[
+  {
+    "Name": "Steel",
+    "YoungsModulus": 200000,
+    "PoissonsRatio": 0.3
+  },
+  {
+    "Name": "Aluminum",
+    "YoungsModulus": 70000,
+    "PoissonsRatio": 0.33
+  }
+]
