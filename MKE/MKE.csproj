@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\DefaultMaterials.json" />
     <None Remove="Data\DefaultSections.json" />
     <None Remove="Resources\ButtonHingedSupport.png" />
     <None Remove="Resources\ButtonRollingSupport.png" />
@@ -26,7 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Data\DefaultSections.json" />
+    <Content Include="Data\DefaultMaterials.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\DefaultSections.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

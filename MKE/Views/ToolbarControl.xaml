@@ -8,7 +8,7 @@
     <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="60">
         <Button Width="40" Height="40" Margin="5" Click="OnNewModelClick">
             <Button.Content>
-                <Image Source="/Images/IconNewModel.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewModel.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Model
@@ -16,7 +16,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnSaveModelClick">
             <Button.Content>
-                <Image Source="/Images/IconSaveModel.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconSaveModel.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 Save Model
@@ -24,7 +24,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewNodeClick">
             <Button.Content>
-                <Image Source="/Images/IconNewNode.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewNode.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Node
@@ -32,7 +32,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewElementClick">
             <Button.Content>
-                <Image Source="/Images/IconNewElement.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewElement.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Element
@@ -40,7 +40,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewRollingSupportClick">
             <Button.Content>
-                <Image Source="/Images/IconNewRollingSupport.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewRollingSupport.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Rolling Support
@@ -48,7 +48,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewHingedSupportClick">
             <Button.Content>
-                <Image Source="/Images/IconNewHingedSupport.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewHingedSupport.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Hinged Support
@@ -56,7 +56,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewFixedSupportClick">
             <Button.Content>
-                <Image Source="/Images/IconNewFixedSupport.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewFixedSupport.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Fixed Support
@@ -64,7 +64,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewPointLoadClick">
             <Button.Content>
-                <Image Source="/Images/IconNewPointLoad.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewPointLoad.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Point Load
@@ -72,7 +72,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnNewUniformLoadClick">
             <Button.Content>
-                <Image Source="/Images/IconNewUniformLoad.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconNewUniformLoad.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 New Uniform Load
@@ -80,7 +80,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnCheckStructureClick">
             <Button.Content>
-                <Image Source="/Images/IconCheckStructure.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconCheckStructure.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 Check Structure
@@ -88,7 +88,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnSolveClick">
             <Button.Content>
-                <Image Source="/Images/IconSolve.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconSolve.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 Solve
@@ -96,7 +96,7 @@
         </Button>
         <Button Width="40" Height="40" Margin="5" Click="OnSettingsClick">
             <Button.Content>
-                <Image Source="/Images/IconSettings.png" Width="35" Height="35"/>
+                <Image Source="/Resources/IconSettings.png" Width="35" Height="35"/>
             </Button.Content>
             <Button.ToolTip>
                 Settings
