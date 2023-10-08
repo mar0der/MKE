@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MKE"
+             xmlns:vm="clr-namespace:MKE.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:ToolbarViewModel />
+    </UserControl.DataContext>
     <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="60">
-        <Button Width="40" Height="40" Margin="5" Click="OnNewModelClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewModelCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewModel.png" Width="35" Height="35"/>
             </Button.Content>
@@ -14,7 +19,7 @@
                 New Model
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnSaveModelClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding SaveModelCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconSaveModel.png" Width="35" Height="35"/>
             </Button.Content>
@@ -22,7 +27,7 @@
                 Save Model
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewNodeClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewNodeCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewNode.png" Width="35" Height="35"/>
             </Button.Content>
@@ -30,7 +35,7 @@
                 New Node
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewElementClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewElementCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewElement.png" Width="35" Height="35"/>
             </Button.Content>
@@ -38,7 +43,7 @@
                 New Element
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewRollingSupportClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewRollingSupportCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewRollingSupport.png" Width="35" Height="35"/>
             </Button.Content>
@@ -46,7 +51,7 @@
                 New Rolling Support
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewHingedSupportClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewHingedSupportCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewHingedSupport.png" Width="35" Height="35"/>
             </Button.Content>
@@ -54,7 +59,7 @@
                 New Hinged Support
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewFixedSupportClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewFixedSupportCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewFixedSupport.png" Width="35" Height="35"/>
             </Button.Content>
@@ -62,7 +67,7 @@
                 New Fixed Support
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewPointLoadClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewPointLoadCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewPointLoad.png" Width="35" Height="35"/>
             </Button.Content>
@@ -70,7 +75,7 @@
                 New Point Load
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnNewUniformLoadClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding NewUniformLoadCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconNewUniformLoad.png" Width="35" Height="35"/>
             </Button.Content>
@@ -78,7 +83,7 @@
                 New Uniform Load
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnCheckStructureClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding CheckStructureCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconCheckStructure.png" Width="35" Height="35"/>
             </Button.Content>
@@ -86,7 +91,7 @@
                 Check Structure
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnSolveClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding SolveCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconSolve.png" Width="35" Height="35"/>
             </Button.Content>
@@ -94,7 +99,7 @@
                 Solve
             </Button.ToolTip>
         </Button>
-        <Button Width="40" Height="40" Margin="5" Click="OnSettingsClick">
+        <Button Width="40" Height="40" Margin="5" Command="{Binding SettingsCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconSettings.png" Width="35" Height="35"/>
             </Button.Content>
