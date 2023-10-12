@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MKE"
         mc:Ignorable="d"
-        Title="MKE" Height="900" Width="1214" ResizeMode="NoResize">
+        Title="MKE" Height="900" Width="1214" ResizeMode="NoResize"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>

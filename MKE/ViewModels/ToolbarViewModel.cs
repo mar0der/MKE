@@ -1,5 +1,4 @@
 ﻿using MKE.Commands;
-using System.Windows;
 using System.Windows.Input;
 
 namespace MKE.ViewModels
@@ -38,73 +37,61 @@ namespace MKE.ViewModels
 
         private void OnNewModel()
         {
-            var a = 5;
             // Handle New Model button click
         }
 
         private void OnSaveModel()
         {
-            var b = 5;
             // Handle Save Model button click
         }
 
         private void OnNewNode()
         {
-            var c = 3;
             // Handle New Node button click
         }
 
         private void OnNewElement()
         {
-            var a = 5;
             // Handle New Element button click
         }
 
         private void OnNewRollingSupport()
         {
-            var b = 5;
             // Handle New Rolling Support button click
         }
 
         private void OnNewHingedSupport()
         {
-            var c = 3;
             // Handle New Hinged Support button click
         }
 
         private void OnNewFixedSupport()
         {
-                var b = 5;
             // Handle New Fixed Support button click
         }
 
         private void OnNewPointLoad()
         {
-            var c = 3;
             // Handle New Point Load button click
         }
 
         private void OnNewUniformLoad()
         {
-            var b = 5;
             // Handle New Uniform Load button click
         }
 
         private void OnCheckStructure()
         {
-            var c = 3;
             // Handle Check Structure button click
         }
 
         private void OnSolve()
         {
-            var b = 5;
             // Handle Solve button click
         }
 
         private void OnSettings()
         {
-            var c = 3;
             // Handle Settings button click
         }
     }
