@@ -8,6 +8,7 @@ using System.Windows.Input;
 using MKE.Services;
 using MKE.Models.Messages;
 using System.Windows;
+using System;
 
 namespace MKE.ViewModels
 {
@@ -19,6 +20,7 @@ namespace MKE.ViewModels
 
 #region Public properties
         public int GridSize { get; set; } = 20;
+        public Point SnapPosition { get; set; }
         public int Height { get; set; } = 800;
         public int Width { get; set; } = 1200;
 
@@ -38,6 +40,8 @@ namespace MKE.ViewModels
 #region Command Registration
         public RelayCommand CanvasClickCommand { get; private set; }
 
+        public RelayCommand CanvasMouseMoveCommand { get; private set; }
+
         public ICommand AddNodeCommand { get; }
 
 #endregion
@@ -56,6 +60,7 @@ namespace MKE.ViewModels
 
             // Creates the command that listens for all clicks on the canvas and dispetches the actions based on flags
             CanvasClickCommand = new RelayCommand(OnCanvasClicked);
+            CanvasMouseMoveCommand = new RelayCommand(OnCanvasMouseMove);
 
             UpdateGridLines();
         }
@@ -83,6 +88,19 @@ namespace MKE.ViewModels
 
 
         #region Command Implementations
+
+        public void OnCanvasMouseMove(object parameter)
+        {
+            if (parameter is MouseEventArgs args && IsNodeCreationModeActive)
+            {
+                Point mousePosition = args.GetPosition(null);
+                Point snappedPosition = GetSnappedPosition(mousePosition);
+                SnapPosition = snappedPosition;
+                System.Diagnostics.Debug.WriteLine($"SnapPosition: {SnapPosition.X}, {SnapPosition.Y}");
+                OnPropertyChanged(nameof(SnapPosition));
+            }
+        }
+
         /// <summary>
         /// Canvas click listener. calls other methods based on the activated mode
         /// </summary>
@@ -95,8 +113,8 @@ namespace MKE.ViewModels
                 if (IsNodeCreationModeActive)
                 {
                     Point clickPosition = args.GetPosition(null);
-                    CreateNodeAtPosition(clickPosition);
-                    IsNodeCreationModeActive = false; // Optionally, deactivate the mode after one node is added.
+                    CreateNodeAtPosition(SnapPosition);
+                    IsNodeCreationModeActive = false;
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
                 }
             }
@@ -122,6 +140,21 @@ namespace MKE.ViewModels
             Nodes.Add(newNode);
             OnPropertyChanged(nameof(Nodes));
         }
+
+        private Point GetSnappedPosition(Point originalPosition)
+        {
+            double correctedY = originalPosition.Y - 60;
+
+            double snappedX = Math.Round(originalPosition.X / GridSize) * GridSize;
+            double snappedY = Math.Round(correctedY / GridSize) * GridSize;
+
+            System.Diagnostics.Debug.WriteLine($"Original positions: {originalPosition.X}, {originalPosition.Y}");
+            System.Diagnostics.Debug.WriteLine($"Corrected positions: {originalPosition.X}, {correctedY}");
+
+            return new Point(snappedX, snappedY); // Add the 60 back to get the actual canvas position
+        }
+
+
 
         #endregion
     }

@@ -8,6 +8,7 @@
              xmlns:cmd="http://www.galasoft.ch/mvvmlight"
              mc:Ignorable="d" 
              xmlns:services="clr-namespace:MKE.Services"
+             xmlns:converters="clr-namespace:MKE.Converters"
              DataContext="{Binding Source={x:Static services:ViewModelLocator.DrawingCanvasViewModel}}"
              d:DesignHeight="800" d:DesignWidth="1200"
              Height="800" Width="1200">
@@ -18,13 +19,29 @@
                 <Setter Property="Stroke" Value="Gray"/>
                 <Setter Property="StrokeThickness" Value="1"/>
             </Style>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:HalfOffsetConverter x:Key="HalfOffsetConverter"/>
         </Canvas.Resources>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseDown">
                 <cmd:EventToCommand Command="{Binding CanvasClickCommand}"  PassEventArgsToCommand="True" />
             </i:EventTrigger>
+            <i:EventTrigger EventName="MouseMove">
+                <cmd:EventToCommand Command="{Binding CanvasMouseMoveCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
         </i:Interaction.Triggers>
 
+        <!--<Rectangle Width="{Binding GridSize}" Height="{Binding GridSize}" 
+           Fill="Yellow" Stroke="Black" StrokeThickness="1"
+           Canvas.Left="{Binding SnapPosition.X}" Canvas.Top="{Binding SnapPosition.Y}"
+           Visibility="{Binding IsNodeCreationModeActive, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
+
+        <Rectangle Width="15" Height="15" 
+           Fill="Yellow" Stroke="Black" StrokeThickness="1"
+           Canvas.Left="{Binding SnapPosition.X, Converter={StaticResource HalfOffsetConverter}}" 
+           Canvas.Top="{Binding SnapPosition.Y, Converter={StaticResource HalfOffsetConverter}}" 
+           Visibility="Visible"/>
+        
         <ItemsControl ItemsSource="{Binding VerticalLines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
