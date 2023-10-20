@@ -54,12 +54,9 @@ namespace MKE.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe<EnterNodeCreationMode>(OnEnterNodeCreationMode);
 
+            // Creates the command that listens for all clicks on the canvas and dispetches the actions based on flags
             CanvasClickCommand = new RelayCommand(OnCanvasClicked);
-            // Some mock data
-            var node1 = new Node(50,50);
-            var node2 = new Node(50,100);
-            Nodes.Add(node1); 
-            Nodes.Add(node2);
+
             UpdateGridLines();
         }
 
@@ -100,17 +97,25 @@ namespace MKE.ViewModels
                     Point clickPosition = args.GetPosition(null);
                     CreateNodeAtPosition(clickPosition);
                     IsNodeCreationModeActive = false; // Optionally, deactivate the mode after one node is added.
+                    Application.Current.MainWindow.Cursor = Cursors.Arrow;
                 }
             }
         }
 
-            private void OnEnterNodeCreationMode(EnterNodeCreationMode data)
+        /// <summary>
+        /// Sets the flag that we are expecting to start adding nodes
+        /// </summary>
+        /// <param name="data"></param>
+        private void OnEnterNodeCreationMode(EnterNodeCreationMode data)
         {
             IsNodeCreationModeActive = true;
+            Application.Current.MainWindow.Cursor = Cursors.Cross;
         }
 
-
-
+        /// <summary>
+        /// Gets executed when the click event is triggered on the canvas and the flag is being set for adding nodes
+        /// </summary>
+        /// <param name="position"></param>
         private void CreateNodeAtPosition(Point position)
         {
             Node newNode = new Node(position.X, position.Y);
