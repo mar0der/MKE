@@ -1,4 +1,5 @@
 ﻿using MKE.Commands;
+using MKE.Models.Messages;
 using MKE.Services;
 using System;
 using System.Diagnostics.Tracing;
@@ -8,6 +9,7 @@ namespace MKE.ViewModels
 {
     public class ToolbarViewModel
     {
+        private readonly EventAggregator _eventAggregator;
         #region Events registration
         public event Action AddNodeRequested;
         #endregion
@@ -29,9 +31,10 @@ namespace MKE.ViewModels
 
         public ToolbarViewModel(EventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             NewModelCommand = new RelayCommand(_ => OnNewModel());
             SaveModelCommand = new RelayCommand(_ => OnSaveModel());
-          //  NewNodeCommand = new RelayCommand(_ => AddNodeRequested?.Invoke());
+            NewNodeCommand = new RelayCommand(_ => OnNewNode());
             NewElementCommand = new RelayCommand(_ => OnNewElement());
             NewRollingSupportCommand = new RelayCommand(_ => OnNewRollingSupport());
             NewHingedSupportCommand = new RelayCommand(_ => OnNewHingedSupport());
@@ -56,7 +59,7 @@ namespace MKE.ViewModels
 
         private void OnNewNode()
         {
-
+            _eventAggregator.Publish(new EnterNodeCreationMode());
         }
 
         private void OnNewElement()
