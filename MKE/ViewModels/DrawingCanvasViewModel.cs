@@ -1,9 +1,11 @@
 ﻿using MKE.Commands;
 using MKE.UIModels;
+using MKE.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using MKE.Services;
 
 namespace MKE.ViewModels
 {
@@ -11,11 +13,17 @@ namespace MKE.ViewModels
     {
         public int GridSize { get; set; } = 20;
 
+#region Obsrvable Collections
         public ObservableCollection<GridLine> VerticalLines { get; } = new ObservableCollection<GridLine>();
+
         public ObservableCollection<GridLine> HorizontalLines { get; } = new ObservableCollection<GridLine>();
 
+        public ObservableCollection<Node> Nodes { get; } = new ObservableCollection<Node>();
 
-        #region Command Registration
+        public ObservableCollection<Element> Elements { get; } = new ObservableCollection<Element>();
+#endregion
+
+#region Command Registration
         public ICommand AddNodeCommand { get; }
 
 #endregion
@@ -27,8 +35,12 @@ namespace MKE.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public DrawingCanvasViewModel()
+        public DrawingCanvasViewModel(EventAggregator eventAggregator)
         {
+            // Some mock data
+            var node1 = new Node(50,50);
+            var node2 = new Node(50,100);
+            Nodes.Add(node1); Nodes.Add(node2);
         }
 
         public void UpdateGridLines(double width, double height)
@@ -36,8 +48,6 @@ namespace MKE.ViewModels
             VerticalLines.Clear();
             HorizontalLines.Clear();
 
-            //HorizontalLines.Add(new GridLine(0, 50, 1100, 50));
-            //VerticalLines.Add(new GridLine(50, 0, 50, 750));
             for (double i = 0; i <= width; i += GridSize)
             {
                 VerticalLines.Add(new GridLine(i, 0, i, height));
@@ -56,6 +66,13 @@ namespace MKE.ViewModels
 
 
         #region Command Implementations
+        private void AddNode()
+        {
+            // Logic for adding a new node
+            var newNode = new Node(100, 100);  // Example position
+            Nodes.Add(newNode);
+            OnPropertyChanged(nameof(Nodes));
+        }
 
 #endregion
     }

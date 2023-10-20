@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MKE.Models
 {
-    class Element
+    public class Element
     {
     }
 }

@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <!-- Toolbar -->
-        <local:ToolbarControl Grid.Row="0"/>
+        <local:ToolbarControl Grid.Row="0" />
 
         <!-- Drawing Canvas -->
         <local:DrawingCanvasControl Grid.Row="1" />

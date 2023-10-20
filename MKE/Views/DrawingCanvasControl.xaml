@@ -4,13 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vm="clr-namespace:MKE.ViewModels"
              mc:Ignorable="d" 
+             xmlns:local="clr-namespace:MKE.Services"
+             DataContext="{Binding Source={x:Static local:ViewModelLocator.DrawingCanvasViewModel}}"
              d:DesignHeight="800" d:DesignWidth="1200"
-             Height="800" Width="1200"
-             Loaded="OnControlLoaded">
-
-    <UserControl.DataContext>
-        <vm:DrawingCanvasViewModel />
-    </UserControl.DataContext>
+             Height="800" Width="1200">
+    <!--Loaded="OnControlLoaded">-->
     
     <!-- Set the Height and Width properties directly -->
     <Canvas Name="DrawingCanvas" Background="LightBlue" VerticalAlignment="Stretch" >
@@ -48,6 +46,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
 
     </Canvas>
 </UserControl>

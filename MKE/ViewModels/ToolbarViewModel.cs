@@ -1,10 +1,18 @@
 ﻿using MKE.Commands;
+using MKE.Services;
+using System;
+using System.Diagnostics.Tracing;
 using System.Windows.Input;
 
 namespace MKE.ViewModels
 {
     public class ToolbarViewModel
     {
+        #region Events registration
+        public event Action AddNodeRequested;
+        #endregion
+
+        #region Commands Registration
         public ICommand NewModelCommand { get; }
         public ICommand SaveModelCommand { get; }
         public ICommand NewNodeCommand { get; }
@@ -17,12 +25,13 @@ namespace MKE.ViewModels
         public ICommand CheckStructureCommand { get; }
         public ICommand SolveCommand { get; }
         public ICommand SettingsCommand { get; }
+        #endregion
 
-        public ToolbarViewModel()
+        public ToolbarViewModel(EventAggregator eventAggregator)
         {
             NewModelCommand = new RelayCommand(_ => OnNewModel());
             SaveModelCommand = new RelayCommand(_ => OnSaveModel());
-            NewNodeCommand = new RelayCommand(_ => OnNewNode());
+          //  NewNodeCommand = new RelayCommand(_ => AddNodeRequested?.Invoke());
             NewElementCommand = new RelayCommand(_ => OnNewElement());
             NewRollingSupportCommand = new RelayCommand(_ => OnNewRollingSupport());
             NewHingedSupportCommand = new RelayCommand(_ => OnNewHingedSupport());
@@ -34,7 +43,7 @@ namespace MKE.ViewModels
             SettingsCommand = new RelayCommand(_ => OnSettings());
         }
 
-
+        #region button click methods
         private void OnNewModel()
         {
             // Handle New Model button click
@@ -47,7 +56,7 @@ namespace MKE.ViewModels
 
         private void OnNewNode()
         {
-            // Handle New Node button click
+
         }
 
         private void OnNewElement()
@@ -94,5 +103,6 @@ namespace MKE.ViewModels
         {
             // Handle Settings button click
         }
+        #endregion
     }
 }
