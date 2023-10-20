@@ -23,6 +23,7 @@ namespace MKE.ViewModels
         public Point SnapPosition { get; set; }
         public int Height { get; set; } = 800;
         public int Width { get; set; } = 1200;
+        public string StatusBarMessage { get; set; }
 
         public bool IsNodeCreationModeActive { get; set; } = false;
  #endregion
@@ -115,6 +116,12 @@ namespace MKE.ViewModels
                     Point clickPosition = args.GetPosition(null);
                     CreateNodeAtPosition(SnapPosition);
                     IsNodeCreationModeActive = false;
+                    StatusBarMessage = string.Empty;
+                    _eventAggregator.Publish(new StatusBarDataMessage
+                    {
+                        StatusMessage = StatusBarMessage,
+                        Coordinate = new Point(0, 0)
+                    });
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
                 }
             }
@@ -127,6 +134,7 @@ namespace MKE.ViewModels
         private void OnEnterNodeCreationMode(EnterNodeCreationMode data)
         {
             IsNodeCreationModeActive = true;
+            StatusBarMessage = "Please select a point to insert a node:";
             Application.Current.MainWindow.Cursor = Cursors.Cross;
         }
 
@@ -151,11 +159,16 @@ namespace MKE.ViewModels
             System.Diagnostics.Debug.WriteLine($"Original positions: {originalPosition.X}, {originalPosition.Y}");
             System.Diagnostics.Debug.WriteLine($"Corrected positions: {originalPosition.X}, {correctedY}");
 
-            return new Point(snappedX, snappedY); // Add the 60 back to get the actual canvas position
+            var snappedPoint = new Point( snappedX, snappedY );
+
+            _eventAggregator.Publish(new StatusBarDataMessage
+            {
+                StatusMessage = StatusBarMessage,
+                Coordinate = snappedPoint 
+            });
+
+            return new Point(snappedX, snappedY);
         }
-
-
-
         #endregion
     }
 }

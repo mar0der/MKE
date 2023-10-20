@@ -13,7 +13,10 @@ namespace MKE.Services
         private static readonly EventAggregator _eventAggregator = new EventAggregator();
 
         public static ToolbarViewModel ToolbarViewModel => new ToolbarViewModel(_eventAggregator);
+
         public static DrawingCanvasViewModel DrawingCanvasViewModel => new DrawingCanvasViewModel(_eventAggregator);
+
+        public static StatusBarViewModel StatusBarViewModel => new StatusBarViewModel(_eventAggregator);
 
     }
 }
