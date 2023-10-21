@@ -10,7 +10,17 @@ namespace MKE.Converters
         {
             if (value is double position)
             {
-                return position - 7.5; // Since the rectangle is 100x100, we offset by 50.
+                double size = 0.0;
+                if (parameter is double p)
+                {
+                    size = p;
+                }
+                else if (parameter is string s && double.TryParse(s, out double parsedSize))
+                {
+                    size = parsedSize;
+                }
+
+                return position - (size / 2);
             }
             return value;
         }

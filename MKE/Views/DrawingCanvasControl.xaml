@@ -30,19 +30,13 @@
                 <cmd:EventToCommand Command="{Binding CanvasMouseMoveCommand}" PassEventArgsToCommand="True" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-
-        <!--<Rectangle Width="{Binding GridSize}" Height="{Binding GridSize}" 
-           Fill="Yellow" Stroke="Black" StrokeThickness="1"
-           Canvas.Left="{Binding SnapPosition.X}" Canvas.Top="{Binding SnapPosition.Y}"
-           Visibility="{Binding IsNodeCreationModeActive, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
-
+<!--Snapping rectangle-->
         <Rectangle Width="15" Height="15" 
            Fill="Yellow" Stroke="Black" StrokeThickness="1"
-           Canvas.Left="{Binding SnapPosition.X, Converter={StaticResource HalfOffsetConverter}}" 
-           Canvas.Top="{Binding SnapPosition.Y, Converter={StaticResource HalfOffsetConverter}}" 
+           Canvas.Left="{Binding SnapPosition.X, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=15}" 
+           Canvas.Top="{Binding SnapPosition.Y, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=15}" 
            Visibility="{Binding IsNodeCreationModeActive, Converter={StaticResource BoolToVisibilityConverter}}"/>
-        
-        
+<!--Vertical Grid Lines-->
         <ItemsControl ItemsSource="{Binding VerticalLines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -56,6 +50,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+<!--Horizontal Grid Lines-->
         <ItemsControl ItemsSource="{Binding HorizontalLines}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -69,7 +64,28 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+<!--Nodes-->
+        <ItemsControl ItemsSource="{Binding Nodes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <!-- Using the HalfOffsetConverter to adjust for half of the Ellipse's dimensions -->
+                    <Setter Property="Canvas.Left" Value="{Binding X, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=10}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=10}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Width="10" Height="10" Fill="Red"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
 
     </Canvas>
 
