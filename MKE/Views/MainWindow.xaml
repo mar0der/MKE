@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MKE"
+        xmlns:services="clr-namespace:MKE.Services"
+        DataContext="{Binding Source={x:Static services:ViewModelLocator.MainWindowViewModel}}"
         mc:Ignorable="d"
         Title="MKE" Height="920" Width="1214" ResizeMode="NoResize"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase">

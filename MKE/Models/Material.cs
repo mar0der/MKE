@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MKE.Models
 {
-    class Material
+    public class Material
     {
     }
 }

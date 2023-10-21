@@ -1,5 +1,4 @@
-﻿using MKE.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace MKE
 {
@@ -11,7 +10,6 @@ namespace MKE
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
         }
     }
 }

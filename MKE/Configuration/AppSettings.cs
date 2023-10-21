@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MKE.Configuration
 {
-    class AppSettings
+    public static class AppSettings
     {
+        // Default directory where the "Save As" dialog will open initially
+        public static string DefaultSaveDirectory { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        // ... Additional settings ...
     }
 }
