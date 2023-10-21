@@ -24,7 +24,6 @@ namespace MKE.ViewModels
         public int Height { get; set; } = 800;
         public int Width { get; set; } = 1200;
         public string StatusBarMessage { get; set; }
-
         public bool IsNodeCreationModeActive { get; set; } = false;
  #endregion
 
@@ -122,6 +121,9 @@ namespace MKE.ViewModels
                         StatusMessage = StatusBarMessage,
                         Coordinate = new Point(0, 0)
                     });
+                    SnapPosition = new Point(-100, -100);
+                    OnPropertyChanged(nameof(IsNodeCreationModeActive));
+                    OnPropertyChanged(nameof(SnapPosition));
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
                 }
             }
@@ -136,6 +138,7 @@ namespace MKE.ViewModels
             IsNodeCreationModeActive = true;
             StatusBarMessage = "Please select a point to insert a node:";
             Application.Current.MainWindow.Cursor = Cursors.Cross;
+            OnPropertyChanged(nameof(IsNodeCreationModeActive));
         }
 
         /// <summary>

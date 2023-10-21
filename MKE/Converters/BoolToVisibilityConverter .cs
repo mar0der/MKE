@@ -15,9 +15,9 @@ namespace MKE.Converters
         {
             if (value is bool booleanValue)
             {
-                return booleanValue ? Visibility.Visible : Visibility.Collapsed;
+                return booleanValue ? Visibility.Visible : Visibility.Hidden;
             }
-            return Visibility.Collapsed;
+            return Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
