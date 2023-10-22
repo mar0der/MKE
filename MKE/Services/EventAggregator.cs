@@ -8,7 +8,14 @@ namespace MKE.Services
 {
     public class EventAggregator
     {
+        private static readonly Lazy<EventAggregator> _instance = new Lazy<EventAggregator>(() => new EventAggregator());
+
+        public static EventAggregator Instance => _instance.Value;
+
         private readonly Dictionary<Type, List<Action<object>>> _eventSubscribers = new();
+
+        private EventAggregator() { }  // Private constructor ensures it's a singleton.
+
 
         public void Publish<TMessage>(TMessage message)
         {

@@ -19,7 +19,7 @@ namespace MKE.Services
 
         private FEMDatabaseService()
         {
-            _eventAggregator = new EventAggregator(); // Adjust as per your event aggregator's requirements
+            _eventAggregator = EventAggregator.Instance;
         }
         #endregion
 

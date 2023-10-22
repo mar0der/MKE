@@ -9,7 +9,6 @@ namespace MKE.ViewModels
 {
     public class ToolbarViewModel
     {
-        private readonly EventAggregator _eventAggregator;
         #region Events registration
         public event Action AddNodeRequested;
         #endregion
@@ -32,7 +31,6 @@ namespace MKE.ViewModels
 
         public ToolbarViewModel(EventAggregator eventAggregator)
         {
-            _eventAggregator = eventAggregator;
             NewModelCommand = new RelayCommand(_ => OnNewModel());
             OpenModelCommand = new RelayCommand(_ => OnOpenModel());
             SaveModelCommand = new RelayCommand(_ => OnSaveModel());
@@ -56,7 +54,31 @@ namespace MKE.ViewModels
 
         private void OnOpenModel()
         {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".mke";
+            dlg.Filter = "MKE Files (.mke)|*.mke";
 
+            // Display OpenFileDialog by calling ShowDialog method
+            bool? result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                string selectedFilePath = dlg.FileName;
+
+                // Use the FEMStorageManager to open and deserialize the file into a FEMDatabase instance
+                var database = FEMDatabaseStorageManager.Instance.Open(selectedFilePath);
+
+                if (database != null)
+                {
+                    FEMDatabaseService.Instance.CurrentDatabase = database;
+                    EventAggregator.Instance.Publish(new DatabaseUpdatedMessage(database));
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
         }
 
         private void OnSaveModel()
@@ -90,7 +112,7 @@ namespace MKE.ViewModels
 
         private void OnNewNode()
         {
-            _eventAggregator.Publish(new EnterNodeCreationModeMessage());
+            EventAggregator.Instance.Publish(new EnterNodeCreationModeMessage());
         }
 
         private void OnNewElement()

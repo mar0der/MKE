@@ -11,7 +11,7 @@ namespace MKE.Services
     public static class ViewModelLocator
     {
 
-        private static readonly EventAggregator _eventAggregator = new EventAggregator();
+        private static readonly EventAggregator _eventAggregator = EventAggregator.Instance;
 
         public static MainWindowViewModel MainWindowViewModel => new MainWindowViewModel(_eventAggregator);
 

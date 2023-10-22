@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using Microsoft.Win32;
+using MKE.Models.Messages;
 
 namespace MKE.Services
 {
@@ -32,12 +33,6 @@ namespace MKE.Services
          
         public void Save(FEMDatabase database)
         {
-            //if (!IsFileEverSaved)
-            //{
-            //    SaveAs(database);
-            //    return;
-            //}
-
             SerializeAndSave(database, Path.Combine(CurrentFilePath, CurrentFileName));
         }
 
@@ -50,15 +45,17 @@ namespace MKE.Services
             IsFileEverSaved = true;
         }
 
-        public FEMDatabase Load()
+        public FEMDatabase Open(string filePath)
         {
-            string filePath = Path.Combine(CurrentFilePath, CurrentFileName);
+            //string filePath = Path.Combine(CurrentFilePath, CurrentFileName);
 
             if (!File.Exists(filePath))
                 return null;
 
             var json = File.ReadAllText(filePath);
-            IsFileEverSaved = true; // Since the file exists and was loaded, it means it was saved before.
+            IsFileEverSaved = true;
+
+
             return JsonSerializer.Deserialize<FEMDatabase>(json);
         }
 

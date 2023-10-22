@@ -1,11 +1,14 @@
-﻿namespace MKE.Models.Messages
+﻿using MKE.Data;
+
+namespace MKE.Models.Messages
 {
     public class DatabaseUpdatedMessage
     {
-        public Node NewNode { get; }
+        public FEMDatabase Database { get; }
 
-        public DatabaseUpdatedMessage()
+        public DatabaseUpdatedMessage(FEMDatabase database)
         {
+            Database = database;
         }
     }
 }

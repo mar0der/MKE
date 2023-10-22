@@ -188,9 +188,8 @@ namespace MKE.ViewModels
         {
             Node newNode = new Node(position.X, position.Y);
             Nodes.Add(newNode);
-            OnPropertyChanged(nameof(Nodes));
-            // Directly add the node to the database via the singleton
             FEMDatabaseService.Instance.AddNode(newNode);
+            OnPropertyChanged(nameof(Nodes));
         }
 
         /// <summary>
