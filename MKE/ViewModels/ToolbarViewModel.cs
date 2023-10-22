@@ -59,7 +59,7 @@ namespace MKE.ViewModels
 
         private void OnNewNode()
         {
-            _eventAggregator.Publish(new EnterNodeCreationMode());
+            _eventAggregator.Publish(new EnterNodeCreationModeMessage());
         }
 
         private void OnNewElement()

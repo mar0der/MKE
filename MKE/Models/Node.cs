@@ -1,29 +1,27 @@
-﻿namespace MKE.Models
+﻿using MKE.Services;
+using System.Collections.Generic;
+
+namespace MKE.Models
 {
     public class Node
     {
-        // Private fields
-        private double _x;
-        private double _y;
+        public int Id { get; private set; } // Setting the set accessor to private ensures the ID can only be set internally.
+        public double X { get; set; }
+        public double Y { get; set; }
 
-        // Public properties
-        public double X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
+        public List<NodeLoad> NodeLoads { get; set; } = new List<NodeLoad>();
+        public int? SupportID { get; set; }
 
-        public double Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
+        public Node() { }
 
-        // Constructor
         public Node(double x, double y)
         {
-            _x = x;
-            _y = y;
+            X = x;
+            Y = y;
+            Id = IdGeneratorService.Instance.GetNextNodeId();  // Fetch the next available ID for the Node
         }
+
+        // You can add methods to assign loads, etc. here
+        // ... other methods and properties ...
     }
 }

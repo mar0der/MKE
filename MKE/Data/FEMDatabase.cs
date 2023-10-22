@@ -10,7 +10,10 @@ namespace MKE.Data
     public class FEMDatabase
     {
         public List<Node> Nodes { get; set; } = new List<Node>();
+
         public List<Material> Materials { get; set; } = new List<Material>();
+
+        public List<Element> Elements { get; set; } = new List<Element>();
 
         public FEMDatabase()
         {

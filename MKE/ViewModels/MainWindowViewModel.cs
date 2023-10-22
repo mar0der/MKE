@@ -43,6 +43,9 @@ namespace MKE.ViewModels
             // Use the storage manager to assign a new model
             CurrentModel = FEMStorageManager.Instance.CreateNewModel();
 
+            var databaseService = FEMDatabaseService.Instance;
+            databaseService.CurrentDatabase = CurrentModel;
+
             // Notify all subscribers that the database has been created
             _eventAggregator.Publish(new DatabaseCreatedMessage(CurrentModel));
         }
