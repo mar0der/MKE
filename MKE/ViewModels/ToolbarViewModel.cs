@@ -16,6 +16,7 @@ namespace MKE.ViewModels
 
         #region Commands Registration
         public ICommand NewModelCommand { get; }
+        public ICommand OpenModelCommand { get; }
         public ICommand SaveModelCommand { get; }
         public ICommand NewNodeCommand { get; }
         public ICommand NewElementCommand { get; }
@@ -33,6 +34,7 @@ namespace MKE.ViewModels
         {
             _eventAggregator = eventAggregator;
             NewModelCommand = new RelayCommand(_ => OnNewModel());
+            OpenModelCommand = new RelayCommand(_ => OnOpenModel());
             SaveModelCommand = new RelayCommand(_ => OnSaveModel());
             NewNodeCommand = new RelayCommand(_ => OnNewNode());
             NewElementCommand = new RelayCommand(_ => OnNewElement());
@@ -52,9 +54,38 @@ namespace MKE.ViewModels
             // Handle New Model button click
         }
 
+        private void OnOpenModel()
+        {
+
+        }
+
         private void OnSaveModel()
         {
-            // Handle Save Model button click
+            var databaseInstance = FEMDatabaseService.Instance.CurrentDatabase;
+
+            if (!FEMDatabaseStorageManager.Instance.IsFileEverSaved)
+            {
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Structure"; // Default file name
+                dlg.DefaultExt = ".mke"; // Default file extension
+                dlg.Filter = "MKE Files (.mke)|*.mke"; // Filter files by extension
+
+                // Display the save file dialog
+                bool? result = dlg.ShowDialog();
+
+                if (result == true)
+                {
+                    // Retrieve the chosen path
+                    string chosenPath = dlg.FileName;
+
+                    // Pass the database and the chosen path to FEMStorageManager
+                    FEMDatabaseStorageManager.Instance.SaveAs(databaseInstance, chosenPath);
+                }
+            }
+            else
+            {
+                FEMDatabaseStorageManager.Instance.Save(databaseInstance);
+            }
         }
 
         private void OnNewNode()

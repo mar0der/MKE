@@ -34,14 +34,14 @@ namespace MKE.ViewModels
         }
 
         // This handles save/load operations
-        public FEMStorageManager StorageManager { get; }
+        public FEMDatabaseStorageManager StorageManager { get; }
 
         public MainWindowViewModel(EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
 
             // Use the storage manager to assign a new model
-            CurrentModel = FEMStorageManager.Instance.CreateNewModel();
+            CurrentModel = FEMDatabaseStorageManager.Instance.CreateNewModel();
 
             var databaseService = FEMDatabaseService.Instance;
             databaseService.CurrentDatabase = CurrentModel;

@@ -1,6 +1,5 @@
 ﻿using MKE.Data;
 using MKE.Models;
-using MKE.Models.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,30 +8,26 @@ namespace MKE.Services
 {
     public class FEMDatabaseService
     {
+        #region Private fields
         private static readonly Lazy<FEMDatabaseService> _instance = new Lazy<FEMDatabaseService>(() => new FEMDatabaseService());
-
-        public static FEMDatabaseService Instance => _instance.Value;
-
-        public FEMDatabase CurrentDatabase { get; set; }
-
         private readonly EventAggregator _eventAggregator;
-        private readonly FEMStorageManager _storageManager = FEMStorageManager.Instance;
+        private readonly FEMDatabaseStorageManager _storageManager = FEMDatabaseStorageManager.Instance;
+        #endregion
+
+        #region Singleton
+        public static FEMDatabaseService Instance => _instance.Value;
 
         private FEMDatabaseService()
         {
             _eventAggregator = new EventAggregator(); // Adjust as per your event aggregator's requirements
-            _eventAggregator.Subscribe<NodeAddedMessage>(OnNodeAdded);
-            // Similarly for other relevant events
         }
+        #endregion
 
-        private void OnNodeAdded(NodeAddedMessage message)
-        {
-            if (CurrentDatabase != null)
-            {
-                CurrentDatabase.Nodes.Add(message.NewNode);
-            }
-        }
+        #region Public Properties
+        public FEMDatabase CurrentDatabase { get; set; }
+        #endregion
 
+        #region Database Accessing Methods
         /// <summary>
         /// Retrieves all nodes from the current database.
         /// </summary>
@@ -41,13 +36,14 @@ namespace MKE.Services
         {
             return CurrentDatabase?.Nodes ?? Enumerable.Empty<Node>();
         }
-
+        /// <summary>
+        /// Adds Node to the database
+        /// </summary>
+        /// <param name="newNode"></param>
         public void AddNode(Node newNode)
         {
-            if (CurrentDatabase != null)
-            {
-                CurrentDatabase.Nodes.Add(newNode);
-            }
+            CurrentDatabase?.Nodes.Add(newNode);
         }
+        #endregion
     }
 }

@@ -3,45 +3,46 @@ using MKE.Data;
 using System;
 using System.IO;
 using System.Text.Json;
+using Microsoft.Win32;
 
 namespace MKE.Services
 {
-    public sealed class FEMStorageManager
+    public sealed class FEMDatabaseStorageManager
     {
-        private static readonly Lazy<FEMStorageManager> _instance = new Lazy<FEMStorageManager>(() => new FEMStorageManager());
+        
 
-        public static FEMStorageManager Instance => _instance.Value;
-
+        #region Public Properties
         public string CurrentFileName { get; private set; } = "Structure1.mke";
         public string CurrentFilePath { get; private set; } = AppSettings.DefaultSaveDirectory;
-
         public bool IsFileEverSaved { get; private set; } = false;
         public bool IsModifiedSinceLastSave { get; set; } = false;
+        #endregion
 
-        private FEMStorageManager() { }
+        #region Singleton
+        private static readonly Lazy<FEMDatabaseStorageManager> _instance = new Lazy<FEMDatabaseStorageManager>(() => new FEMDatabaseStorageManager());
+        public static FEMDatabaseStorageManager Instance => _instance.Value;
+        private FEMDatabaseStorageManager() { }
+        #endregion
 
         public void SetCurrentFile(string path, string name)
         {
             CurrentFilePath = path;
             CurrentFileName = name;
         }
-
+         
         public void Save(FEMDatabase database)
         {
-            if (!IsFileEverSaved)
-            {
-                SaveAs(database);
-                return;
-            }
+            //if (!IsFileEverSaved)
+            //{
+            //    SaveAs(database);
+            //    return;
+            //}
 
             SerializeAndSave(database, Path.Combine(CurrentFilePath, CurrentFileName));
         }
 
-        public void SaveAs(FEMDatabase database)
+        public void SaveAs(FEMDatabase database, string chosenPath)
         {
-            // Assuming you have a method or UI component to pick the directory and filename
-            string chosenPath = "path_picked_by_user"; // Replace with actual path from UI dialog
-
             CurrentFilePath = Path.GetDirectoryName(chosenPath);
             CurrentFileName = Path.GetFileName(chosenPath);
 

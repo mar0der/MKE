@@ -16,6 +16,14 @@
                 New Model
             </Button.ToolTip>
         </Button>
+        <Button Width="40" Height="40" Margin="5" Command="{Binding OpenModelCommand}">
+            <Button.Content>
+                <Image Source="/Resources/IconNewModel.png" Width="35" Height="35"/>
+            </Button.Content>
+            <Button.ToolTip>
+                Open Model
+            </Button.ToolTip>
+        </Button>
         <Button Width="40" Height="40" Margin="5" Command="{Binding SaveModelCommand}">
             <Button.Content>
                 <Image Source="/Resources/IconSaveModel.png" Width="35" Height="35"/>
