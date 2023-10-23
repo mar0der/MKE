@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MKE.Models
+﻿namespace MKE.Models
 {
-    class CrossSection
+    public class CrossSection
     {
     }
 }

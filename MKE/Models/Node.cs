@@ -8,6 +8,7 @@ namespace MKE.Models
         public int Id { get; private set; } // Setting the set accessor to private ensures the ID can only be set internally.
         public double X { get; set; }
         public double Y { get; set; }
+        public List<Element> ConnectedElements { get; } = new List<Element>();
 
         public List<NodeLoad> NodeLoads { get; set; } = new List<NodeLoad>();
         public int? SupportID { get; set; }

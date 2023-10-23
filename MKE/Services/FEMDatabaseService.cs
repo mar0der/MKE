@@ -44,6 +44,25 @@ namespace MKE.Services
         {
             CurrentDatabase?.Nodes.Add(newNode);
         }
+
+        public Element CreateElement(Node startNode, Node endNode, Material material, CrossSection section)
+        {
+            var element = new Element(startNode, endNode, material, section);
+
+            // Associate the element with its nodes
+            startNode.ConnectedElements.Add(element);
+            endNode.ConnectedElements.Add(element);
+
+            // Optionally, you can also add the element to the database's element list (if you have one)
+            CurrentDatabase?.Elements.Add(element);
+
+            return element;
+        }
+
+        public IEnumerable<Element> GetAllElements()
+        {
+            return CurrentDatabase?.Elements ?? Enumerable.Empty<Element>();
+        }
         #endregion
     }
 }
