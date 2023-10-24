@@ -62,6 +62,16 @@ namespace MKE.Services
             return element;
         }
 
+        public Node GetNodeById(int id)
+        {
+            return CurrentDatabase?.Nodes.FirstOrDefault(n => n.Id == id);
+        }
+
+        public Element GetElementById(int id)
+        {
+            return CurrentDatabase?.Elements.FirstOrDefault(e => e.Id == id);
+        }
+
         //public Element CreateElement(Node startNode, Node endNode, Material material, CrossSection section)
         //{
         //    var element = new Element(startNode, endNode, material, section);

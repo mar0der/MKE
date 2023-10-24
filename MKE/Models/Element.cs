@@ -1,4 +1,5 @@
 ﻿using MKE.Services;
+using System.Text.Json.Serialization;
 
 namespace MKE.Models
 {
@@ -9,6 +10,11 @@ namespace MKE.Models
         public int EndNodeId { get; set; }   // Replaced Node with Node ID
         public Material Material { get; set; }
         public CrossSection CrossSection { get; set; }
+        [JsonIgnore]
+        public Node StartNode => FEMDatabaseService.Instance.GetNodeById(StartNodeId);
+        [JsonIgnore]
+        public Node EndNode => FEMDatabaseService.Instance.GetNodeById(EndNodeId);
+
 
         public Element() { }
 
