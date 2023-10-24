@@ -1,5 +1,6 @@
 ﻿using MKE.Data;
 using MKE.Models;
+using MKE.Models.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,21 +44,37 @@ namespace MKE.Services
         public void AddNode(Node newNode)
         {
             CurrentDatabase?.Nodes.Add(newNode);
+            _eventAggregator.Publish(new DatabaseUpdatedMessage(CurrentDatabase));
         }
 
-        public Element CreateElement(Node startNode, Node endNode, Material material, CrossSection section)
+        public Element AddElement(Element element)
         {
-            var element = new Element(startNode, endNode, material, section);
-
-            // Associate the element with its nodes
-            startNode.ConnectedElements.Add(element);
-            endNode.ConnectedElements.Add(element);
-
-            // Optionally, you can also add the element to the database's element list (if you have one)
             CurrentDatabase?.Elements.Add(element);
 
+            // Here, we get the nodes and update their ConnectedElementIds list
+            var startNode = CurrentDatabase.Nodes.FirstOrDefault(n => n.Id == element.StartNodeId);
+            var endNode = CurrentDatabase.Nodes.FirstOrDefault(n => n.Id == element.EndNodeId);
+
+            startNode?.ConnectedElementIds.Add(element.Id);
+            endNode?.ConnectedElementIds.Add(element.Id);
+
+            _eventAggregator.Publish(new DatabaseUpdatedMessage(CurrentDatabase));
             return element;
         }
+
+        //public Element CreateElement(Node startNode, Node endNode, Material material, CrossSection section)
+        //{
+        //    var element = new Element(startNode, endNode, material, section);
+
+        //    // Associate the element with its nodes
+        //    startNode.ConnectedElements.Add(element);
+        //    endNode.ConnectedElements.Add(element);
+
+        //    // Optionally, you can also add the element to the database's element list (if you have one)
+        //    CurrentDatabase?.Elements.Add(element);
+
+        //    return element;
+        //}
 
         public IEnumerable<Element> GetAllElements()
         {

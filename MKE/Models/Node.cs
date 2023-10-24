@@ -1,28 +1,27 @@
 ﻿using MKE.Services;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace MKE.Models
 {
     public class Node
     {
-        public int Id { get; private set; } // Setting the set accessor to private ensures the ID can only be set internally.
+        public int Id { get; private set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public List<Element> ConnectedElements { get; } = new List<Element>();
-
+        public List<int> ConnectedElementIds { get; } = new List<int>(); // This replaces the ConnectedElements list
         public List<NodeLoad> NodeLoads { get; set; } = new List<NodeLoad>();
         public int? SupportID { get; set; }
+        public Point Position { get; set; }
 
         public Node() { }
 
         public Node(double x, double y)
         {
+            Position = new Point(x, y);
             X = x;
             Y = y;
-            Id = IdGeneratorService.Instance.GetNextNodeId();  // Fetch the next available ID for the Node
+            Id = IdGeneratorService.Instance.GetNextNodeId();
         }
-
-        // You can add methods to assign loads, etc. here
-        // ... other methods and properties ...
     }
 }

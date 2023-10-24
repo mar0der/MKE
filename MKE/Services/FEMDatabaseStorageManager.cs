@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using Microsoft.Win32;
 using MKE.Models.Messages;
+using System.Text.Json.Serialization;
 
 namespace MKE.Services
 {
@@ -54,7 +55,6 @@ namespace MKE.Services
 
             var json = File.ReadAllText(filePath);
             IsFileEverSaved = true;
-
 
             return JsonSerializer.Deserialize<FEMDatabase>(json);
         }

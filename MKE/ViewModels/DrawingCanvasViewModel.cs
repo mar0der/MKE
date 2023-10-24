@@ -25,6 +25,10 @@ namespace MKE.ViewModels
         public int Width { get; set; } = 1200;
         public string StatusBarMessage { get; set; }
         public bool IsNodeCreationModeActive { get; set; } = false;
+        public bool IsStartElementSelectionModeActive { get; set; } = false;
+        public bool IsEndElementSelectionModeActive { get; set; } = false;
+        public bool IsPickPointActivated { get; set; } = false;
+        public Node StartNodeForElement { get; set; } = null;
         #endregion
 
         #region Obsrvable Collections
@@ -62,6 +66,8 @@ namespace MKE.ViewModels
             
             // Event Subscriptions
             _eventAggregator.Subscribe<EnterNodeCreationModeMessage>(OnEnterNodeCreationModeMessage);
+            _eventAggregator.Subscribe<EnterElementCreationModeMessage>(OnEnterElementCreationModeMessage);
+
             _eventAggregator.Subscribe<DatabaseUpdatedMessage>(OnDatabaseUpdatedMessage);
 
             // Creates the command that listens for all clicks on the canvas and dispetches the actions based on flags
@@ -83,11 +89,10 @@ namespace MKE.ViewModels
         /// <param name="parameter"></param>
         public void OnCanvasMouseMove(object parameter)
         {
-            if (parameter is MouseEventArgs args && IsNodeCreationModeActive)
+            if (parameter is MouseEventArgs args && IsPickPointActivated)
             {
                 Point mousePosition = args.GetPosition(null);
-                Point snappedPosition = GetSnappedPosition(mousePosition);
-                SnapPosition = snappedPosition;
+                SnapPosition = GetSnappedPosition(mousePosition);
                 System.Diagnostics.Debug.WriteLine($"SnapPosition: {SnapPosition.X}, {SnapPosition.Y}");
                 OnPropertyChanged(nameof(SnapPosition));
             }
@@ -102,21 +107,32 @@ namespace MKE.ViewModels
         {
             if (parameter is MouseButtonEventArgs args)
             {
+                Point clickPosition = args.GetPosition(null);
+                Node nodeAtPosition = CheckNodeAtPosition(SnapPosition);
                 if (IsNodeCreationModeActive)
                 {
-                    Point clickPosition = args.GetPosition(null);
                     CreateNodeAtPosition(SnapPosition);
-                    IsNodeCreationModeActive = false;
+                    ResetFlags();
                     StatusBarMessage = string.Empty;
-                    _eventAggregator.Publish(new StatusBarDataMessage
-                    {
-                        StatusMessage = StatusBarMessage,
-                        Coordinate = new Point(0, 0)
-                    });
+                    _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage, new Point(0, 0)));
                     SnapPosition = new Point(-100, -100);
-                    OnPropertyChanged(nameof(IsNodeCreationModeActive));
                     OnPropertyChanged(nameof(SnapPosition));
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
+                }
+                else if (IsStartElementSelectionModeActive)
+                {
+                    StartNodeForElement = nodeAtPosition ?? CreateNodeAtPosition(SnapPosition);
+                    StatusBarMessage = "Please select a point to insert the end node of the element:";
+                    _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage, new Point(0, 0)));
+                    IsStartElementSelectionModeActive = false;
+                    IsEndElementSelectionModeActive = true;
+                }
+                else if (IsEndElementSelectionModeActive)
+                {
+                    Node endNode = nodeAtPosition ?? CreateNodeAtPosition(SnapPosition);
+                    CreateElement(StartNodeForElement, endNode);
+                    Application.Current.MainWindow.Cursor = Cursors.Arrow;
+                    ResetFlags();
                 }
             }
         }
@@ -133,9 +149,21 @@ namespace MKE.ViewModels
         private void OnEnterNodeCreationModeMessage(EnterNodeCreationModeMessage data)
         {
             IsNodeCreationModeActive = true;
+            IsPickPointActivated = true;
             StatusBarMessage = "Please select a point to insert a node:";
             Application.Current.MainWindow.Cursor = Cursors.Cross;
             OnPropertyChanged(nameof(IsNodeCreationModeActive));
+            OnPropertyChanged(nameof(IsPickPointActivated));
+        }
+
+        private void OnEnterElementCreationModeMessage(EnterElementCreationModeMessage message)
+        {
+            IsStartElementSelectionModeActive = true;
+            IsPickPointActivated = true;
+            StatusBarMessage = "Please select a point to insert the start node of the element:";
+            Application.Current.MainWindow.Cursor = Cursors.Cross;
+            OnPropertyChanged(nameof(IsStartElementSelectionModeActive));
+            OnPropertyChanged(nameof(IsPickPointActivated));
         }
 
         /// <summary>
@@ -151,10 +179,56 @@ namespace MKE.ViewModels
             {
                 Nodes.Add(node);
             }
+            var elementsFromDb = FEMDatabaseService.Instance.GetAllElements();
+            Elements.Clear();
+            foreach (var element in elementsFromDb)
+            {
+                Elements.Add(element);
+            }
         }
         #endregion
 
         #region Other private methods
+
+        /// <summary>
+        /// Gets executed when the click event is triggered on the canvas and the flag is being set for adding nodes
+        /// </summary>
+        /// <param name="position"></param>
+        private Node CreateNodeAtPosition(Point position)
+        {
+            Node newNode = new Node(position.X, position.Y);
+            FEMDatabaseService.Instance.AddNode(newNode);
+            return newNode;
+        }
+
+        private Element CreateElement(Node startNode, Node endNode)
+        {
+            Element newElement = new Element(startNode.Id, endNode.Id, null, null);
+            FEMDatabaseService.Instance.AddElement(newElement);
+            return newElement;
+        }
+
+        private Node CheckNodeAtPosition(Point position)
+        {
+            foreach (var node in Nodes)
+            {
+                if (node.Position == position) return node;
+            }
+            return null;
+        }
+
+        private void ResetFlags()
+        {
+            IsNodeCreationModeActive = false;
+            IsStartElementSelectionModeActive = false;
+            IsEndElementSelectionModeActive = false;
+            IsPickPointActivated = false;
+            OnPropertyChanged(nameof(IsNodeCreationModeActive));
+            OnPropertyChanged(nameof(IsStartElementSelectionModeActive));
+            OnPropertyChanged(nameof(IsEndElementSelectionModeActive));
+            OnPropertyChanged(nameof(IsPickPointActivated));
+        }
+
         /// <summary>
         /// Updates the grid lines for the canvas. Clears the existing lines and creates new ones based on
         /// the current Width, Height, and GridSize properties.
@@ -180,17 +254,7 @@ namespace MKE.ViewModels
             OnPropertyChanged(nameof(HorizontalLines));
         }
 
-        /// <summary>
-        /// Gets executed when the click event is triggered on the canvas and the flag is being set for adding nodes
-        /// </summary>
-        /// <param name="position"></param>
-        private void CreateNodeAtPosition(Point position)
-        {
-            Node newNode = new Node(position.X, position.Y);
-            Nodes.Add(newNode);
-            FEMDatabaseService.Instance.AddNode(newNode);
-            OnPropertyChanged(nameof(Nodes));
-        }
+
 
         /// <summary>
         /// Handles the mouse move event on the canvas. When the Node Creation mode is active, 
@@ -211,11 +275,7 @@ namespace MKE.ViewModels
 
             var snappedPoint = new Point(snappedX, snappedY);
 
-            _eventAggregator.Publish(new StatusBarDataMessage
-            {
-                StatusMessage = StatusBarMessage,
-                Coordinate = snappedPoint
-            });
+            _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage,snappedPoint));
 
             return new Point(snappedX, snappedY);
         }

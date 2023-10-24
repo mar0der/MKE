@@ -117,7 +117,7 @@ namespace MKE.ViewModels
 
         private void OnNewElement()
         {
-            // Handle New Element button click
+            EventAggregator.Instance.Publish(new EnterElementCreationModeMessage());
         }
 
         private void OnNewRollingSupport()

@@ -24,7 +24,7 @@ namespace MKE.ViewModels
         private void HandleStatusBarDataMessage(StatusBarDataMessage message)
         {
             StatusMessage = message.StatusMessage;
-            CoordinateDisplayText = $"X: {message.Coordinate.X}, Y: {message.Coordinate.Y}";
+            CoordinateDisplayText = $"X: {message.Coordinates.X}, Y: {message.Coordinates.Y}";
             OnPropertyChanged(nameof(CoordinateDisplayText));
             OnPropertyChanged(nameof(StatusMessage));
         }

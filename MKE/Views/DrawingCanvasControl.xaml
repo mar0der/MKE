@@ -35,7 +35,7 @@
            Fill="Yellow" Stroke="Black" StrokeThickness="1"
            Canvas.Left="{Binding SnapPosition.X, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=15}" 
            Canvas.Top="{Binding SnapPosition.Y, Converter={StaticResource HalfOffsetConverter}, ConverterParameter=15}" 
-           Visibility="{Binding IsNodeCreationModeActive, Converter={StaticResource BoolToVisibilityConverter}}"/>
+           Visibility="{Binding IsPickPointActivated, Converter={StaticResource BoolToVisibilityConverter}}"/>
 <!--Vertical Grid Lines-->
         <ItemsControl ItemsSource="{Binding VerticalLines}">
             <ItemsControl.ItemsPanel>

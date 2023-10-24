@@ -1,6 +1,6 @@
 ﻿namespace MKE.Models.Messages
 {
-    public class EnterNodeCreationModeMessage
+    public class EnterElementCreationModeMessage
     {
     }
 }
