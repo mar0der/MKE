@@ -67,7 +67,6 @@ namespace MKE.ViewModels
             // Event Subscriptions
             _eventAggregator.Subscribe<EnterNodeCreationModeMessage>(OnEnterNodeCreationModeMessage);
             _eventAggregator.Subscribe<EnterElementCreationModeMessage>(OnEnterElementCreationModeMessage);
-
             _eventAggregator.Subscribe<DatabaseUpdatedMessage>(OnDatabaseUpdatedMessage);
 
             // Creates the command that listens for all clicks on the canvas and dispetches the actions based on flags
@@ -112,18 +111,15 @@ namespace MKE.ViewModels
                 if (IsNodeCreationModeActive)
                 {
                     CreateNodeAtPosition(SnapPosition);
-                    ResetFlags();
-                    StatusBarMessage = string.Empty;
-                    _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage, new Point(0, 0)));
-                    SnapPosition = new Point(-100, -100);
-                    OnPropertyChanged(nameof(SnapPosition));
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
+                    StatusBarMessage = string.Empty;
+                    ResetFlags();
+                    OnPropertyChanged(nameof(SnapPosition));
                 }
                 else if (IsStartElementSelectionModeActive)
                 {
                     StartNodeForElement = nodeAtPosition ?? CreateNodeAtPosition(SnapPosition);
-                    StatusBarMessage = "Please select a point to insert the end node of the element:";
-                    _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage, new Point(0, 0)));
+                    StatusBarMessage = "Please select a point for END node of the element:";
                     IsStartElementSelectionModeActive = false;
                     IsEndElementSelectionModeActive = true;
                 }
@@ -132,8 +128,12 @@ namespace MKE.ViewModels
                     Node endNode = nodeAtPosition ?? CreateNodeAtPosition(SnapPosition);
                     CreateElement(StartNodeForElement, endNode);
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
+                    StatusBarMessage = string.Empty;
                     ResetFlags();
+                    OnPropertyChanged(nameof(SnapPosition));
+
                 }
+                _eventAggregator.Publish(new StatusBarDataMessage(StatusBarMessage, new Point(0, 0)));
             }
         }
         #endregion
@@ -160,7 +160,7 @@ namespace MKE.ViewModels
         {
             IsStartElementSelectionModeActive = true;
             IsPickPointActivated = true;
-            StatusBarMessage = "Please select a point to insert the start node of the element:";
+            StatusBarMessage = "Please select a point to insert the START node of the element:";
             Application.Current.MainWindow.Cursor = Cursors.Cross;
             OnPropertyChanged(nameof(IsStartElementSelectionModeActive));
             OnPropertyChanged(nameof(IsPickPointActivated));

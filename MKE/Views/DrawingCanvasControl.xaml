@@ -64,23 +64,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <!--Elements (Green Lines)-->
-        <ItemsControl ItemsSource="{Binding Elements}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Line X1="{Binding StartNode.X}" Y1="{Binding StartNode.Y}" 
-                  X2="{Binding EndNode.X}" Y2="{Binding EndNode.Y}" 
-                  Stroke="Green" StrokeThickness="5" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
         <!--Nodes-->
-        <ItemsControl ItemsSource="{Binding Nodes}">
+        <ItemsControl Canvas.ZIndex="2" ItemsSource="{Binding Nodes}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas/>
@@ -99,6 +84,23 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
+        <!--Elements (Green Lines)-->
+        <ItemsControl Canvas.ZIndex="1" ItemsSource="{Binding Elements}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Line X1="{Binding StartNode.X}" Y1="{Binding StartNode.Y}" 
+                  X2="{Binding EndNode.X}" Y2="{Binding EndNode.Y}" 
+                  Stroke="Green" StrokeThickness="5" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Canvas>
 
 </UserControl>
