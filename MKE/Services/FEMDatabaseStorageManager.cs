@@ -26,6 +26,21 @@ namespace MKE.Services
         private FEMDatabaseStorageManager() { }
         #endregion
 
+        #region Public DB Acces Methods
+
+        public FEMDatabase CreateNewModel()
+        {
+            var newDatabase = new FEMDatabase(); // This initializes the empty model
+                                                 // Further operations like resetting the current file name and path can be added
+            CurrentFileName = "Structure1.mke";
+            CurrentFilePath = AppSettings.DefaultSaveDirectory;
+            IsFileEverSaved = false;
+            IsModifiedSinceLastSave = false;
+
+            return newDatabase;
+        }
+
+        // Not sure we need this yet
         public void SetCurrentFile(string path, string name)
         {
             CurrentFilePath = path;
@@ -48,8 +63,6 @@ namespace MKE.Services
 
         public FEMDatabase Open(string filePath)
         {
-            //string filePath = Path.Combine(CurrentFilePath, CurrentFileName);
-
             if (!File.Exists(filePath))
                 return null;
 
@@ -59,23 +72,16 @@ namespace MKE.Services
             return JsonSerializer.Deserialize<FEMDatabase>(json);
         }
 
-        public FEMDatabase CreateNewModel()
-        {
-            var newDatabase = new FEMDatabase(); // This initializes the empty model
-                                                 // Further operations like resetting the current file name and path can be added
-            CurrentFileName = "Structure1.mke";
-            CurrentFilePath = AppSettings.DefaultSaveDirectory;
-            IsFileEverSaved = false;
-            IsModifiedSinceLastSave = false;
 
-            return newDatabase;
-        }
+        #endregion
 
+        #region Other Private Methods
         private void SerializeAndSave(FEMDatabase database, string path)
         {
             var json = JsonSerializer.Serialize(database);
             File.WriteAllText(path, json);
             IsModifiedSinceLastSave = false;
         }
+        #endregion
     }
 }

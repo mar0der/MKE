@@ -1,4 +1,5 @@
 ﻿using MKE.Commands;
+using MKE.Data;
 using MKE.Models.Messages;
 using MKE.Services;
 using System;
@@ -64,14 +65,19 @@ namespace MKE.ViewModels
             // Get the selected file name and display in a TextBox
             if (result == true)
             {
-                string selectedFilePath = dlg.FileName;
+                string fullPath = dlg.FileName;
+                string directoryPath = System.IO.Path.GetDirectoryName(fullPath);
+                string fileName = System.IO.Path.GetFileName(fullPath);
 
                 // Use the FEMStorageManager to open and deserialize the file into a FEMDatabase instance
-                var database = FEMDatabaseStorageManager.Instance.Open(selectedFilePath);
+                var database = FEMDatabaseStorageManager.Instance.Open(fullPath);
 
                 if (database != null)
                 {
                     FEMDatabaseService.Instance.CurrentDatabase = database;
+                    FEMDatabaseStorageManager.Instance.SetCurrentFile(directoryPath, fileName);
+                    IdGeneratorService.Instance.InitializeWithDatabase(database);
+                    
                     EventAggregator.Instance.Publish(new DatabaseUpdatedMessage(database));
                 }
                 else

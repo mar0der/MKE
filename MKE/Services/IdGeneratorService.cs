@@ -21,7 +21,7 @@ namespace MKE.Services
         {
             // If the database is null or doesn't have nodes/elements, IDs start from 1
             _currentMaxNodeId = database?.Nodes?.Max(node => node.Id) ?? 0;
-           // _currentMaxElementId = database?.Elements?.Max(element => element.Id) ?? 0;
+            _currentMaxElementId = database?.Elements?.Max(element => element.Id) ?? 0;
         }
 
         public int GetNextNodeId()

@@ -5,7 +5,7 @@ namespace MKE.Models
 {
     public class Element
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public int StartNodeId { get; set; } // Replaced Node with Node ID
         public int EndNodeId { get; set; }   // Replaced Node with Node ID
         public Material Material { get; set; }
