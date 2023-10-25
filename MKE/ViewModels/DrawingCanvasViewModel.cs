@@ -106,11 +106,13 @@ namespace MKE.ViewModels
         {
             if (parameter is MouseButtonEventArgs args)
             {
-                Point clickPosition = args.GetPosition(null);
                 Node nodeAtPosition = CheckNodeAtPosition(SnapPosition);
-                if (IsNodeCreationModeActive)
+                if (IsNodeCreationModeActive )
                 {
-                    CreateNodeAtPosition(SnapPosition);
+                    if (nodeAtPosition == null)
+                    {
+                        CreateNodeAtPosition(SnapPosition);
+                    }
                     Application.Current.MainWindow.Cursor = Cursors.Arrow;
                     StatusBarMessage = string.Empty;
                     ResetFlags();
@@ -212,7 +214,7 @@ namespace MKE.ViewModels
         {
             foreach (var node in Nodes)
             {
-                if (node.Position == position) return node;
+                if (node.X == position.X & node.Y == position.Y)  return node;
             }
             return null;
         }

@@ -12,13 +12,11 @@ namespace MKE.Models
         public List<int> ConnectedElementIds { get; } = new List<int>(); // This replaces the ConnectedElements list
         public List<NodeLoad> NodeLoads { get; set; } = new List<NodeLoad>();
         public int? SupportID { get; set; }
-        public Point Position { get; set; }
 
         public Node() { }
 
         public Node(double x, double y)
         {
-            Position = new Point(x, y);
             X = x;
             Y = y;
             Id = IdGeneratorService.Instance.GetNextNodeId();
