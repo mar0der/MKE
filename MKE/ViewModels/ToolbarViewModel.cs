@@ -50,7 +50,20 @@ namespace MKE.ViewModels
         #region button click methods
         private void OnNewModel()
         {
-            // Handle New Model button click
+            // Step 1: Initialize a new FEMDatabase instance.
+            var newDatabase = new FEMDatabase();
+
+            // Step 2: Update the global or shared instances to reflect the new model.
+            FEMDatabaseService.Instance.CurrentDatabase = newDatabase;
+            IdGeneratorService.Instance.InitializeWithDatabase(newDatabase);  // Assuming you want to reset the ID generator.
+
+            // Resetting the storage manager's state, especially if it tracks whether a file has been saved before.
+            //FEMDatabaseStorageManager.Instance.ResetState();
+
+            // Step 3: Inform listeners about the new model. This could be UI components, graphs, tables, etc.
+            EventAggregator.Instance.Publish(new DatabaseUpdatedMessage(newDatabase));
+
+            // Optionally: You might want to clear or reset other aspects of your application like clearing out old results, resetting views, etc.
         }
 
         private void OnOpenModel()
