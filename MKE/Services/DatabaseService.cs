@@ -1,4 +1,5 @@
-﻿using MKE.Data;
+﻿using Accessibility;
+using MKE.Data;
 using MKE.Models;
 using MKE.Models.Messages;
 using System;
@@ -7,25 +8,33 @@ using System.Linq;
 
 namespace MKE.Services
 {
-    public class FEMDatabaseService
+    public class DatabaseService
     {
         #region Private fields
-        private static readonly Lazy<FEMDatabaseService> _instance = new Lazy<FEMDatabaseService>(() => new FEMDatabaseService());
+        private Database _currentDatabase;
+        private static readonly Lazy<DatabaseService> _instance = new Lazy<DatabaseService>(() => new DatabaseService());
         private readonly EventAggregator _eventAggregator;
-        private readonly FEMDatabaseStorageManager _storageManager = FEMDatabaseStorageManager.Instance;
+        private readonly DatabaseStorageManager _storageManager = DatabaseStorageManager.Instance;
         #endregion
 
         #region Singleton
-        public static FEMDatabaseService Instance => _instance.Value;
+        public static DatabaseService Instance => _instance.Value;
 
-        private FEMDatabaseService()
+        private DatabaseService()
         {
             _eventAggregator = EventAggregator.Instance;
         }
         #endregion
 
         #region Public Properties
-        public FEMDatabase CurrentDatabase { get; set; }
+        public Database CurrentDatabase {
+            get { return _currentDatabase; }
+            set 
+            {
+                _currentDatabase = value;
+                _eventAggregator.Publish(new DatabaseUpdatedMessage(CurrentDatabase));
+            } 
+        }
         #endregion
 
         #region Database Accessing Methods
@@ -37,6 +46,12 @@ namespace MKE.Services
         {
             return CurrentDatabase?.Nodes ?? Enumerable.Empty<Node>();
         }
+
+        public Node GetNodeById(int id)
+        {
+            return CurrentDatabase?.Nodes.FirstOrDefault(n => n.Id == id);
+        }
+
         /// <summary>
         /// Adds Node to the database
         /// </summary>
@@ -45,6 +60,15 @@ namespace MKE.Services
         {
             CurrentDatabase?.Nodes.Add(newNode);
             _eventAggregator.Publish(new DatabaseUpdatedMessage(CurrentDatabase));
+        }
+
+        public IEnumerable<Element> GetAllElements()
+        {
+            return CurrentDatabase?.Elements ?? Enumerable.Empty<Element>();
+        }
+        public Element GetElementById(int id)
+        {
+            return CurrentDatabase?.Elements.FirstOrDefault(e => e.Id == id);
         }
 
         public Element AddElement(Element element)
@@ -60,35 +84,6 @@ namespace MKE.Services
 
             _eventAggregator.Publish(new DatabaseUpdatedMessage(CurrentDatabase));
             return element;
-        }
-
-        public Node GetNodeById(int id)
-        {
-            return CurrentDatabase?.Nodes.FirstOrDefault(n => n.Id == id);
-        }
-
-        public Element GetElementById(int id)
-        {
-            return CurrentDatabase?.Elements.FirstOrDefault(e => e.Id == id);
-        }
-
-        //public Element CreateElement(Node startNode, Node endNode, Material material, CrossSection section)
-        //{
-        //    var element = new Element(startNode, endNode, material, section);
-
-        //    // Associate the element with its nodes
-        //    startNode.ConnectedElements.Add(element);
-        //    endNode.ConnectedElements.Add(element);
-
-        //    // Optionally, you can also add the element to the database's element list (if you have one)
-        //    CurrentDatabase?.Elements.Add(element);
-
-        //    return element;
-        //}
-
-        public IEnumerable<Element> GetAllElements()
-        {
-            return CurrentDatabase?.Elements ?? Enumerable.Empty<Element>();
         }
         #endregion
     }

@@ -4,9 +4,9 @@ namespace MKE.Models.Messages
 {
     public class DatabaseCreatedMessage
     {
-        public FEMDatabase NewDatabase { get; }
+        public Database NewDatabase { get; }
 
-        public DatabaseCreatedMessage(FEMDatabase newDatabase)
+        public DatabaseCreatedMessage(Database newDatabase)
         {
             NewDatabase = newDatabase;
         }

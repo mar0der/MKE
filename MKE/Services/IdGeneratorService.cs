@@ -17,11 +17,10 @@ namespace MKE.Services
 
         private IdGeneratorService() { }
 
-        public void InitializeWithDatabase(FEMDatabase database)
+        public void InitializeWithDatabase(Database database)
         {
-            // If the database is null or doesn't have nodes/elements, IDs start from 1
-            _currentMaxNodeId = database?.Nodes?.Max(node => node.Id) ?? 0;
-            _currentMaxElementId = database?.Elements?.Max(element => element.Id) ?? 0;
+            _currentMaxNodeId = (database?.Nodes?.Any() ?? false) ? database.Nodes.Max(node => node.Id) : 0;
+            _currentMaxElementId = (database?.Elements?.Any() ?? false) ? database.Elements.Max(element => element.Id) : 0;
         }
 
         public int GetNextNodeId()

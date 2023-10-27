@@ -9,7 +9,7 @@ namespace MKE.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private FEMDatabase _currentModel;
+        private Database _currentModel;
         private readonly EventAggregator _eventAggregator;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -20,7 +20,7 @@ namespace MKE.ViewModels
         }
 
         // This represents the current FEM data
-        public FEMDatabase CurrentModel
+        public Database CurrentModel
         {
             get { return _currentModel; }
             set
@@ -34,16 +34,16 @@ namespace MKE.ViewModels
         }
 
         // This handles save/load operations
-        public FEMDatabaseStorageManager StorageManager { get; }
+        public DatabaseStorageManager StorageManager { get; }
 
         public MainWindowViewModel(EventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
 
             // Use the storage manager to assign a new model
-            CurrentModel = FEMDatabaseStorageManager.Instance.CreateNewModel();
+            CurrentModel = DatabaseStorageManager.Instance.ResetState();
 
-            var databaseService = FEMDatabaseService.Instance;
+            var databaseService = DatabaseService.Instance;
             databaseService.CurrentDatabase = CurrentModel;
 
             // Notify all subscribers that the database has been created

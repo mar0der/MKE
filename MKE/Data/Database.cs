@@ -1,13 +1,9 @@
 ﻿using MKE.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MKE.Data
 {
-    public class FEMDatabase
+    public class Database
     {
         public List<Node> Nodes { get; set; } = new List<Node>();
 
@@ -15,9 +11,8 @@ namespace MKE.Data
 
         public List<Element> Elements { get; set; } = new List<Element>();
 
-        public FEMDatabase()
+        public Database()
         {
-            // Initialization logic here if needed.
         }
     }
 }

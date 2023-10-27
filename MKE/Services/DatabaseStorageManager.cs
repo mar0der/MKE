@@ -9,10 +9,8 @@ using System.Text.Json.Serialization;
 
 namespace MKE.Services
 {
-    public sealed class FEMDatabaseStorageManager
+    public sealed class DatabaseStorageManager
     {
-        
-
         #region Public Properties
         public string CurrentFileName { get; private set; } = "Structure1.mke";
         public string CurrentFilePath { get; private set; } = AppSettings.DefaultSaveDirectory;
@@ -21,16 +19,16 @@ namespace MKE.Services
         #endregion
 
         #region Singleton
-        private static readonly Lazy<FEMDatabaseStorageManager> _instance = new Lazy<FEMDatabaseStorageManager>(() => new FEMDatabaseStorageManager());
-        public static FEMDatabaseStorageManager Instance => _instance.Value;
-        private FEMDatabaseStorageManager() { }
+        private static readonly Lazy<DatabaseStorageManager> _instance = new Lazy<DatabaseStorageManager>(() => new DatabaseStorageManager());
+        public static DatabaseStorageManager Instance => _instance.Value;
+        private DatabaseStorageManager() { }
         #endregion
 
         #region Public DB Acces Methods
 
-        public FEMDatabase CreateNewModel()
+        public Database ResetState()
         {
-            var newDatabase = new FEMDatabase(); // This initializes the empty model
+            var newDatabase = new Database(); // This initializes the empty model
                                                  // Further operations like resetting the current file name and path can be added
             CurrentFileName = "Structure1.mke";
             CurrentFilePath = AppSettings.DefaultSaveDirectory;
@@ -47,12 +45,12 @@ namespace MKE.Services
             CurrentFileName = name;
         }
          
-        public void Save(FEMDatabase database)
+        public void Save(Database database)
         {
             SerializeAndSave(database, Path.Combine(CurrentFilePath, CurrentFileName));
         }
 
-        public void SaveAs(FEMDatabase database, string chosenPath)
+        public void SaveAs(Database database, string chosenPath)
         {
             CurrentFilePath = Path.GetDirectoryName(chosenPath);
             CurrentFileName = Path.GetFileName(chosenPath);
@@ -61,7 +59,7 @@ namespace MKE.Services
             IsFileEverSaved = true;
         }
 
-        public FEMDatabase Open(string filePath)
+        public Database Open(string filePath)
         {
             if (!File.Exists(filePath))
                 return null;
@@ -69,14 +67,14 @@ namespace MKE.Services
             var json = File.ReadAllText(filePath);
             IsFileEverSaved = true;
 
-            return JsonSerializer.Deserialize<FEMDatabase>(json);
+            return JsonSerializer.Deserialize<Database>(json);
         }
 
 
         #endregion
 
         #region Other Private Methods
-        private void SerializeAndSave(FEMDatabase database, string path)
+        private void SerializeAndSave(Database database, string path)
         {
             var json = JsonSerializer.Serialize(database);
             File.WriteAllText(path, json);

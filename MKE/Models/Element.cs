@@ -11,9 +11,9 @@ namespace MKE.Models
         public Material Material { get; set; }
         public CrossSection CrossSection { get; set; }
         [JsonIgnore]
-        public Node StartNode => FEMDatabaseService.Instance.GetNodeById(StartNodeId);
+        public Node StartNode => DatabaseService.Instance.GetNodeById(StartNodeId);
         [JsonIgnore]
-        public Node EndNode => FEMDatabaseService.Instance.GetNodeById(EndNodeId);
+        public Node EndNode => DatabaseService.Instance.GetNodeById(EndNodeId);
 
 
         public Element() { }

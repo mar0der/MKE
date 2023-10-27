@@ -50,20 +50,17 @@ namespace MKE.ViewModels
         #region button click methods
         private void OnNewModel()
         {
+
             // Step 1: Initialize a new FEMDatabase instance.
-            var newDatabase = new FEMDatabase();
+            var newDatabase = new Database();
 
             // Step 2: Update the global or shared instances to reflect the new model.
-            FEMDatabaseService.Instance.CurrentDatabase = newDatabase;
-            IdGeneratorService.Instance.InitializeWithDatabase(newDatabase);  // Assuming you want to reset the ID generator.
+            DatabaseService.Instance.CurrentDatabase = newDatabase;
+            IdGeneratorService.Instance.InitializeWithDatabase(newDatabase);
 
             // Resetting the storage manager's state, especially if it tracks whether a file has been saved before.
-            //FEMDatabaseStorageManager.Instance.ResetState();
+            DatabaseStorageManager.Instance.ResetState();
 
-            // Step 3: Inform listeners about the new model. This could be UI components, graphs, tables, etc.
-            EventAggregator.Instance.Publish(new DatabaseUpdatedMessage(newDatabase));
-
-            // Optionally: You might want to clear or reset other aspects of your application like clearing out old results, resetting views, etc.
         }
 
         private void OnOpenModel()
@@ -83,12 +80,12 @@ namespace MKE.ViewModels
                 string fileName = System.IO.Path.GetFileName(fullPath);
 
                 // Use the FEMStorageManager to open and deserialize the file into a FEMDatabase instance
-                var database = FEMDatabaseStorageManager.Instance.Open(fullPath);
+                var database = DatabaseStorageManager.Instance.Open(fullPath);
 
                 if (database != null)
                 {
-                    FEMDatabaseService.Instance.CurrentDatabase = database;
-                    FEMDatabaseStorageManager.Instance.SetCurrentFile(directoryPath, fileName);
+                    DatabaseService.Instance.CurrentDatabase = database;
+                    DatabaseStorageManager.Instance.SetCurrentFile(directoryPath, fileName);
                     IdGeneratorService.Instance.InitializeWithDatabase(database);
                     
                     EventAggregator.Instance.Publish(new DatabaseUpdatedMessage(database));
@@ -102,9 +99,9 @@ namespace MKE.ViewModels
 
         private void OnSaveModel()
         {
-            var databaseInstance = FEMDatabaseService.Instance.CurrentDatabase;
+            var databaseInstance = DatabaseService.Instance.CurrentDatabase;
 
-            if (!FEMDatabaseStorageManager.Instance.IsFileEverSaved)
+            if (!DatabaseStorageManager.Instance.IsFileEverSaved)
             {
                 Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
                 dlg.FileName = "Structure"; // Default file name
@@ -120,12 +117,12 @@ namespace MKE.ViewModels
                     string chosenPath = dlg.FileName;
 
                     // Pass the database and the chosen path to FEMStorageManager
-                    FEMDatabaseStorageManager.Instance.SaveAs(databaseInstance, chosenPath);
+                    DatabaseStorageManager.Instance.SaveAs(databaseInstance, chosenPath);
                 }
             }
             else
             {
-                FEMDatabaseStorageManager.Instance.Save(databaseInstance);
+                DatabaseStorageManager.Instance.Save(databaseInstance);
             }
         }
 

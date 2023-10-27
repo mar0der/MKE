@@ -175,13 +175,13 @@ namespace MKE.ViewModels
         private void OnDatabaseUpdatedMessage(DatabaseUpdatedMessage message)
         {
             // Assuming DatabaseService provides a method to get all nodes
-            var nodesFromDb = FEMDatabaseService.Instance.GetAllNodes();
+            var nodesFromDb = DatabaseService.Instance.GetAllNodes();
             Nodes.Clear();
             foreach (var node in nodesFromDb)
             {
                 Nodes.Add(node);
             }
-            var elementsFromDb = FEMDatabaseService.Instance.GetAllElements();
+            var elementsFromDb = DatabaseService.Instance.GetAllElements();
             Elements.Clear();
             foreach (var element in elementsFromDb)
             {
@@ -199,14 +199,14 @@ namespace MKE.ViewModels
         private Node CreateNodeAtPosition(Point position)
         {
             Node newNode = new Node(position.X, position.Y);
-            FEMDatabaseService.Instance.AddNode(newNode);
+            DatabaseService.Instance.AddNode(newNode);
             return newNode;
         }
 
         private Element CreateElement(Node startNode, Node endNode)
         {
             Element newElement = new Element(startNode.Id, endNode.Id, null, null);
-            FEMDatabaseService.Instance.AddElement(newElement);
+            DatabaseService.Instance.AddElement(newElement);
             return newElement;
         }
 
